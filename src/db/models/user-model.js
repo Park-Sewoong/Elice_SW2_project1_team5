@@ -34,7 +34,7 @@ export class UserModel {
 
   async deleteUser (email) {
     const user = await User.deleteOne({ email });
-    return user.deletedCount  // 이렇게 하면 되는지 확인좀 해주세요
+    return user.deletedCount  //  이렇게 하면 되는건지 확인좀 해주세요
   }
 }
 
