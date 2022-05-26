@@ -22,17 +22,25 @@ const productRouter = Router();
 // 주문 api (아래는 /register이지만, 실제로는 /product/order 요청해야 함.)
 // orderList, email, address, phonenumber등을 받음
 
+productRouter.get('/all', loginRequired, async (req, res, next) => {
+  try {
+
+    const products = await productService.getAllProduct();
+    
+    res.status(201).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
 productRouter.get('/:sex/:type/:product_id', async (req, res, next) => {
   try {
     const sex = req.params.sex;
     const type = req.params.type;
-    const product_id = req.params.type;
+    const product_id = Number(req.params.product_id);
 
-    const product_specific = await productService.getItem({
-      sex,
-      type,
-      product_id,
-    });
+    const product_specific = await productService.getItem(
+      product_id
+    );
     res.status(201).json(product_specific);
   } catch (error) {
     next(error);
@@ -85,20 +93,23 @@ productRouter.post('/add', upload.single('image'), async (req, res, next) => {
   }
 });
 
+
 productRouter.delete('/', async (req, res, next) => {
   try {
     const product_id = req.body.product_id;
     const product = await productService.getItem(product_id);
-    fs.unlink(product.product_image, err => {
+    console.log(product);
+    console.log('.'+product.product_image);
+    
+    const deletedCount = await productService.deleteProduct(
+      product_id);
+
+    fs.unlinkSync('.'+product.product_image, err => {
     
       if(err.code == 'ENOENT'){
-          console.log("파일 삭제 Error 발생");
-      }
-    });
-    const deletedCount = await productService.deleteProduct({
-      product_id,
-    });
-    
+            console.log("파일 삭제 Error 발생");
+        }
+      });
     res.status(201).json(deletedCount);
   } catch (error) {
     next(error);

@@ -10,11 +10,12 @@ export class ProductModel {
 
  
   async findByCategory(category) {
-    const products = await Product.find({category: category});
+    const {sex,type} =category;
+    const products = await Product.find({category: {sex:sex, type:type}});
     return products;
   }
 
-  async findByProductID(product_id) {
+  async findByProductId(product_id) {
     const product = await Product.findOne({product_id});
     return product;
   }
@@ -28,15 +29,16 @@ export class ProductModel {
     const {deletedCount}= await Product.deleteOne({product_id});
     return deletedCount;
   }
+  async findAll(){
+    const allProducts = await Product.find({});
+    return allProducts;
+  }
   async create(userInfo) {
     const createdNewUser = await User.create(userInfo);
     return createdNewUser;
   }
 
-  async findAll() {
-    const users = await User.find({});
-    return users;
-  }
+ 
 
   async update({ userId, update }) {
     const filter = { _id: userId };
