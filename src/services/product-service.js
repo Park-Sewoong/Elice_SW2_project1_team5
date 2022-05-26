@@ -43,7 +43,7 @@ class ProductService {
     const deletedCount= await this.productModel.deleteProduct(product_id);
     return deletedCount;
   }
- 
+
 }
 
 const productService = new ProductService(productModel);

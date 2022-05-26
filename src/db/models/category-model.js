@@ -4,13 +4,9 @@ import { CategorySchema } from '../schemas/category-schema';
 const Category = model('categories', CategorySchema);
 
 export class CategoryModel {
-  async findOne(type) {
-    const category = await User.findOne({ type });
-    return category;
-  }
 
   async findOne(sex) {
-    const category = await User.findOne({ sex });
+    const category = await Category.findOne({ sex });
     return category;
   }
 
@@ -24,19 +20,23 @@ export class CategoryModel {
     return categories;
   }
 
-  async update({ type, sex }) {
-    const filter = { type };
-    const option = { sex };
 
-    const updatedCategory = await User.findOneAndUpdate(filter, update, option);
-    return updatedCategory;
-  }
+  // async update({ type, sex }) {
+  //   const filter = { type };
+  //   const option = { sex };
 
-  async deleteCategory (type) {
-    const { deletedCount } = await Type.deleteOne({ type });
+  //   const updatedCategory = await User.findOneAndUpdate(filter, update, option);
+  //   return updatedCategory;
+  // }
+
+  async deleteCategory (input) {
+    const { sex, type } = input;
+    const { deletedCount } = await Category.deleteOne({ category: {sex: sex, type: type} });
+
     return deletedCount
   }
 }
+
 
 const categoryModel = new CategoryModel();
 
