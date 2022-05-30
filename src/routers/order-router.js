@@ -8,9 +8,8 @@ const orderRouter = Router();
 
 orderRouter.get('/all', loginRequired, async (req, res, next) => {
   try {
-
     const orders = await orderService.getAllOrder();
-    
+
     res.status(201).json(orders);
   } catch (error) {
     next(error);
@@ -25,12 +24,15 @@ orderRouter.post('/',async(req,res,next)=>{
      const address= {postalCode, address1, address2};
 
     const createdOrder = await orderService.addOrder({
-      orderList,email,fullName, phoneNumber,address
-    })
+      OrderList,
+      email,
+      fullName,
+      phoneNumber,
+      address,
+    });
 
     res.status(201).json(createdOrder);
-  }
-  catch(error){
+  } catch (error) {
     next(error);
   }
 
@@ -52,37 +54,35 @@ orderRouter.post('/',async(req,res,next)=>{
 
 });
 
-orderRouter.get('/email/:email',async(req,res,next)=>{
-  try{
+orderRouter.get('/email/:email', async (req, res, next) => {
+  try {
     //email is admin
     let orders;
-    const email= req.params.email;
-    const user= await userService.getUserByEmail(email);
-    if (user.role ==="admin"){
-      orders= await orderService.getAllOrder();
+    const email = req.params.email;
+    const user = await userService.getUserByEmail(email);
+    if (user.role === 'admin') {
+      orders = await orderService.getAllOrder();
     }
     //email is not admin
-    else{
-      orders= await orderService.getMyOrder(email);
+    else {
+      orders = await orderService.getMyOrder(email);
     }
 
     res.status(200).json(orders);
-  } catch(error){
+  } catch (error) {
     next(error);
   }
 });
 
-orderRouter.delete('/',async(req,res,next)=>{
-  try{
+orderRouter.delete('/', async (req, res, next) => {
+  try {
     const order_id = req.body.order_id;
-    const deletedCount = await orderService.deleteOrder(
-      order_id)
-    
-    res.status(201).json(deletedCount);
+    const deletedCount = await orderService.deleteOrder(order_id);
 
-  } catch(error){
+    res.status(201).json(deletedCount);
+  } catch (error) {
     next(error);
   }
-})
+});
 
 export { orderRouter };
