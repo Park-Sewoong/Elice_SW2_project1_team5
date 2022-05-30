@@ -15,17 +15,13 @@ orderRouter.get('/all', loginRequired, async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+
 });
 
 orderRouter.post('/',async(req,res,next)=>{
   try{
-     const orderList =req.body.orderList;
-     const email =req.body.email;
-     const fullName= req.body.fullName;
-     const phoneNumber =req.body.phoneNumber;
-     const postalCode =req.body.postalCode;
-     const address1 =req.body.address1;
-     const address2 =req.body.address2;
+     const { orderList, email, fullName, phoneNumber, postalCode, address1, address2 } = req.body; // destructuring
+
      const address= {postalCode, address1, address2};
 
     const createdOrder = await orderService.addOrder({
@@ -37,6 +33,23 @@ orderRouter.post('/',async(req,res,next)=>{
   catch(error){
     next(error);
   }
+
+  // pagination
+  const page = Number(req.query.page || 1);
+  const perPage = Number(req.query.perPage || 1);
+
+  const [total, posts] = await Promise.all([
+    Post.countDocuments({}),
+    Post.find({})
+        .sort({ createdAt: -1 })
+        .skip(perPage * (page - 1))
+        .limit(perPage)
+  ])
+
+  const totalPage = Math.ceil(total / perPage);
+
+  res.render('/mypage/orderlist', { posts, page, perPage, totalPage })
+
 });
 
 orderRouter.get('/email/:email',async(req,res,next)=>{
