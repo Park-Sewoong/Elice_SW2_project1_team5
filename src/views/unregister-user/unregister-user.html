@@ -6,14 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>쇼핑 5팀 - mypage</title>
     <!-- 아이콘 -->
-    <link rel="icon" type="image/png" sizes="16x16" href="/elice-rabbit-favicon.png" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/elice-rabbit-favicon.png"
+    />
     <!-- bulma css -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
+    />
     <!-- 폰트 어썸: 아이콘 -->
-    <script defer src="https://kit.fontawesome.com/7630448495.js" crossorigin="anonymous"></script>
+    <script
+      defer
+      src="https://kit.fontawesome.com/7630448495.js"
+      crossorigin="anonymous"
+    ></script>
     <!-- 커스텀 css, js -->
-    <link rel="stylesheet" href="register-select-page.css" />
-    <script src="register-select-page.js" type="module" defer></script>
+    <link rel="stylesheet" href="unregister-user.css" />
+    <script src="unregister-user.js" type="module" defer></script>
   </head>
   <body>
     <!-- 헤더 부분 -->
@@ -25,7 +37,13 @@
             <span class="has-text-link">쇼핑-5팀</span>
           </a>
 
-          <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
@@ -51,22 +69,14 @@
 
     <!-- 본문 -->
     <div class="div-container">
-      <h1>등록하기</h1>
-      <div class="button-grid">
-        <ul class="buttons">
-          <li class="button-menu">
-            <a href="/mypage/register/category">
-              <i class="fa-solid fa-basket-shopping"></i>
-              <span>카테고리 등록</span>
-            </a>
-          </li>
-          <li class="button-menu">
-            <a href="/mypage/register/product">
-              <i class="fa-solid fa-basket-shopping"></i>
-              <span>제품 등록</span>
-            </a>
-          </li>
-        </ul>
+      <h1>비밀번호 확인하기</h1>
+      <div class="certify-password">
+        <input
+          type="password"
+          id="password"
+          placeholder="현재 비밀번호를 입력하세요"
+        />
+        <button id="submit">확인</button>
       </div>
     </div>
   </body>
